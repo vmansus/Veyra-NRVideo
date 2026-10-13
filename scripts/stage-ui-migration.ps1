@@ -198,12 +198,17 @@ if (-not (Test-Path -LiteralPath (Join-Path $appPath 'qml\QtTest\qmldir') -PathT
 $requiredQtDlls = @(
   'Qt6Core.dll', 'Qt6Gui.dll', 'Qt6Qml.dll', 'Qt6QmlModels.dll',
   'Qt6Quick.dll', 'Qt6QuickControls2.dll', 'Qt6QuickTemplates2.dll',
-  'Qt6Widgets.dll', 'Qt6QuickTest.dll'
+  'Qt6Widgets.dll', 'Qt6QuickTest.dll', 'Qt6Network.dll'
 )
 foreach ($name in $requiredQtDlls) {
   $path = Join-Path $appPath $name
   if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Qt deployment is incomplete; missing $path" }
 }
+# Online updates use Windows certificate trust through Qt's native TLS backend.
+$schannelSource = Join-Path $qtRoot 'plugins\tls\qschannelbackend.dll'
+if (-not (Test-Path -LiteralPath $schannelSource -PathType Leaf)) { throw "missing Qt Schannel backend: $schannelSource" }
+New-Item -ItemType Directory -Path (Join-Path $appPath 'tls') -Force | Out-Null
+Copy-Item -LiteralPath $schannelSource -Destination (Join-Path $appPath 'tls\qschannelbackend.dll') -Force
 $platformPlugin = Join-Path $appPath 'platforms\qwindows.dll'
 if (-not (Test-Path -LiteralPath $platformPlugin -PathType Leaf)) { throw "Qt deployment is incomplete; missing $platformPlugin" }
 if (-not (Test-Path -LiteralPath (Join-Path $appPath 'qml\Veyra\qmldir') -PathType Leaf)) {

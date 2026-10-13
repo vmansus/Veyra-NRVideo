@@ -957,8 +957,40 @@ VPage {
                     VGroup {
                         VRow {
                             label: qsTr("检查更新")
-                            hint: qsTr("GitHub · Likely7/Veyra-NRVideo · 发布页")
-                            VButton { text: qsTr("检查"); onClicked: veyra.openReleasesPage() }
+                            hint: veyra.updater.message
+                            VButton {
+                                text: qsTr("检查")
+                                enabled: ["idle", "current", "available", "failed"].indexOf(veyra.updater.state) >= 0
+                                onClicked: veyra.updater.check()
+                            }
+                        }
+                        VRow {
+                            visible: veyra.updater.latestVersion.length > 0 || veyra.updater.state === "checking"
+                            label: qsTr("在线更新")
+                            hint: veyra.updater.state === "downloading"
+                                  ? qsTr("下载进度：%1%").arg(Math.round(veyra.updater.progress * 100))
+                                  : qsTr("下载当前包类型的完整更新，保留用户配置；旧文件备份供回退")
+                            VButton {
+                                visible: veyra.updater.state === "available" || veyra.updater.state === "failed"
+                                text: qsTr("下载更新")
+                                onClicked: veyra.updater.download()
+                            }
+                            VButton {
+                                visible: veyra.updater.state === "ready"
+                                text: qsTr("退出并安装")
+                                enabled: !veyra.running && !veyra.exportRunning
+                                onClicked: veyra.installUpdate()
+                            }
+                            VButton {
+                                visible: ["checking", "downloading", "installing", "ready"].indexOf(veyra.updater.state) >= 0
+                                text: qsTr("取消")
+                                onClicked: veyra.updater.cancel()
+                            }
+                        }
+                        VRow {
+                            label: qsTr("手动更新")
+                            hint: qsTr("打开 GitHub 正式发布页")
+                            VButton { text: qsTr("打开"); ghost: true; onClicked: veyra.openReleasesPage() }
                         }
                         VRow {
                             label: qsTr("反馈问题")

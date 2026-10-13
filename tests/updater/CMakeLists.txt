@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.24)
+project(veyra_updater_tests LANGUAGES CXX)
+enable_testing()
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Network Test)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD 20)
+if(MSVC)
+  add_compile_options(/utf-8 /W4 /WX)
+endif()
+get_filename_component(VEYRA_ROOT "../.." ABSOLUTE)
+add_library(veyra_updater STATIC
+  ${VEYRA_ROOT}/src/ui/OnlineUpdater.cpp
+  ${VEYRA_ROOT}/include/veyra/ui/OnlineUpdater.h)
+target_include_directories(veyra_updater PUBLIC ${VEYRA_ROOT}/include)
+target_link_libraries(veyra_updater PUBLIC Qt6::Core Qt6::Network)
+qt_add_resources(veyra_updater "veyra_updater" PREFIX "/update" BASE "${VEYRA_ROOT}/scripts/update"
+  FILES ${VEYRA_ROOT}/scripts/update/install-update.ps1)
+add_executable(veyra_online_updater_tests OnlineUpdaterTests.cpp)
+target_link_libraries(veyra_online_updater_tests PRIVATE veyra_updater Qt6::Test)
+add_test(NAME online-updater COMMAND veyra_online_updater_tests)
+add_executable(veyra_update_owner UpdateOwner.cpp)

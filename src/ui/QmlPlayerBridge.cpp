@@ -5,6 +5,7 @@
 #include "veyra/engine/FrameGenerationSelection.h"
 #include "veyra/ui/QmlExportQueueModel.h"
 #include "veyra/ui/PlaylistModel.h"
+#include "veyra/ui/OnlineUpdater.h"
 #include "veyra/ui/UiLanguage.h"
 #include <QQmlEngine>
 #include <QMetaMethod>
@@ -1064,6 +1065,17 @@ QVariantList QmlPlayerBridge::srBackendChoices() const {
 QmlPlayerBridge::QmlPlayerBridge(engine::EngineController& engine, std::filesystem::path dataDirectory,
                                 QObject* parent)
     : QObject(parent), impl_(std::make_unique<Impl>(engine, std::move(dataDirectory))) {
+    auto* updates = new OnlineUpdater(version(), QCoreApplication::applicationDirPath(), this);
+    updates->setObjectName(QStringLiteral("onlineUpdater"));
+    connect(updates, &OnlineUpdater::installRequested, this, [this, updates] {
+        // Playback/export may have started while the helper verified its files.
+        if (running() || exportRunning()) {
+            updates->cancel();
+            emit notice(tr("请先停止播放和导出，再安装更新"), true);
+            return;
+        }
+        quit();
+    });
     impl_->playlist = new PlaylistModel(utf8Of((impl_->dataDir / L"playlist.v1.json").wstring()), this);
     connect(impl_->playlist, &PlaylistModel::playRequested, this, [this](const QString& path) {
         openPath(path);
@@ -5518,6 +5530,15 @@ void QmlPlayerBridge::openFeedbackPage() {
 }
 void QmlPlayerBridge::openReleasesPage() {
     QDesktopServices::openUrl(QUrl(QStringLiteral("https://github.com/Likely7/Veyra-NRVideo/releases")));
+}
+QObject* QmlPlayerBridge::updater() const {
+    return findChild<OnlineUpdater*>(QStringLiteral("onlineUpdater"), Qt::FindDirectChildrenOnly);
+}
+void QmlPlayerBridge::installUpdate() {
+    if (running() || exportRunning()) {
+        emit notice(tr("请先停止播放和导出，再安装更新"), true); return;
+    }
+    static_cast<OnlineUpdater*>(updater())->install();
 }
 bool QmlPlayerBridge::eventFilter(QObject* watched, QEvent* event) {
     const auto type = event->type();

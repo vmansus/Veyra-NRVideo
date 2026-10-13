@@ -946,13 +946,22 @@ if(VEYRA_FFMPEG_ROOT AND EXISTS "${VEYRA_FFMPEG_ROOT}/include/libavformat/avform
 option(VEYRA_BUILD_QT_PROBE "Build the Qt + D3D12 host probe" OFF)
 option(VEYRA_BUILD_QML_UI "Build the QML front end" OFF)
 if(VEYRA_BUILD_QT_PROBE OR VEYRA_BUILD_QML_UI)
-  find_package(Qt6 6.8 QUIET COMPONENTS Core Gui Qml Quick QuickControls2 Widgets)
+  find_package(Qt6 6.8 QUIET COMPONENTS Core Gui Qml Quick QuickControls2 Widgets Network)
 endif()
 
 # The QML bridge. It is engine code (no QML files), so it compiles into a
 # separate small library rather than into veyra_engine: the product build must
 # never depend on Qt being installed.
 if(VEYRA_BUILD_QML_UI AND Qt6_FOUND)
+  add_library(veyra_updater STATIC src/ui/OnlineUpdater.cpp include/veyra/ui/OnlineUpdater.h)
+  set_target_properties(veyra_updater PROPERTIES AUTOMOC ON)
+  target_compile_features(veyra_updater PUBLIC cxx_std_20)
+  target_compile_options(veyra_updater PRIVATE /utf-8)
+  veyra_apply_warnings(veyra_updater)
+  target_include_directories(veyra_updater PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  target_link_libraries(veyra_updater PUBLIC Qt6::Core Qt6::Network)
+  qt_add_resources(veyra_updater "veyra_updater" PREFIX "/update" BASE "${CMAKE_CURRENT_SOURCE_DIR}/scripts/update"
+    FILES scripts/update/install-update.ps1)
   add_library(veyra_qml_bridge STATIC src/ui/QmlExportQueueModel.cpp include/veyra/ui/QmlExportQueueModel.h src/ui/QmlPlayerBridge.cpp src/ui/ThumbnailProvider.cpp
     src/ui/PlaylistModel.cpp include/veyra/ui/PlaylistModel.h
     include/veyra/ui/QmlPlayerBridge.h include/veyra/ui/ThumbnailProvider.h
@@ -1007,7 +1016,7 @@ if(VEYRA_BUILD_QML_UI AND Qt6_FOUND)
   # Widgets is needed only for QFileDialog: the native file picker is the one
   # piece of the old shell worth keeping, and its own dialog is what users
   # expect from a desktop app. No QWidget UI is created.
-  target_link_libraries(veyra_qml_bridge PUBLIC veyra_engine Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick Qt6::QuickControls2 Qt6::Widgets)
+  target_link_libraries(veyra_qml_bridge PUBLIC veyra_engine veyra_updater Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick Qt6::QuickControls2 Qt6::Widgets)
   add_executable(veyra_playlist_tests tests/unit/PlaylistModelTests.cpp src/ui/PlaylistModel.cpp include/veyra/ui/PlaylistModel.h)
   set_target_properties(veyra_playlist_tests PROPERTIES AUTOMOC ON)
   target_compile_features(veyra_playlist_tests PRIVATE cxx_std_20)
@@ -1016,6 +1025,10 @@ if(VEYRA_BUILD_QML_UI AND Qt6_FOUND)
   target_link_libraries(veyra_playlist_tests PRIVATE Qt6::Core)
   find_package(Qt6 COMPONENTS Test)
   if(TARGET Qt6::Test)
+    add_executable(veyra_online_updater_tests tests/updater/OnlineUpdaterTests.cpp)
+    set_target_properties(veyra_online_updater_tests PROPERTIES AUTOMOC ON)
+    target_link_libraries(veyra_online_updater_tests PRIVATE veyra_updater Qt6::Test)
+    target_compile_options(veyra_online_updater_tests PRIVATE /utf-8)
     add_executable(veyra_playlist_window_tests tests/qml/PlaylistWindowTests.cpp)
     target_compile_features(veyra_playlist_window_tests PRIVATE cxx_std_20)
     target_compile_options(veyra_playlist_window_tests PRIVATE /utf-8)

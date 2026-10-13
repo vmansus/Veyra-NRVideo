@@ -219,6 +219,7 @@ class QmlPlayerBridge : public QObject {
 
     Q_PROPERTY(QString appName READ appName CONSTANT)
     Q_PROPERTY(QString version READ version CONSTANT)
+    Q_PROPERTY(QObject* updater READ updater CONSTANT)
 
     // --- playback ----------------------------------------------------------
     Q_PROPERTY(QString statusText READ statusText NOTIFY snapshotChanged)
@@ -695,6 +696,8 @@ public:
     Q_INVOKABLE bool presentationOverlayRunning() const;
     Q_INVOKABLE void openFeedbackPage();
     Q_INVOKABLE void openReleasesPage();
+    QObject* updater() const;
+    Q_INVOKABLE void installUpdate();
     QVariantList audioDevices() const;
     QVariantList gpuMonitorChoices() const;
     QString gpuMonitorName() const;

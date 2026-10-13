@@ -9345,3 +9345,20 @@ ZIP/EXE原字节晋级，仅外部下载名去test-r2；包内显示原标识在
 v2.0.7 ID 410800361，published_at 2026-10-12T16:24:59Z，latest/非草稿/非预发布通过；两个运行资产服务器SHA/size等于原test-r2。v2.0.7-sources ID 410800322，两源资产、非latest，未变依赖源保留v2.0.6。main/tag6ede5a7普通atomic推送成功，产品与67ab696相同，后续只补回执文档。remote.py draft/upload/verify-draft/publish/verify-public均通过；public-check.py final全部公开文档/双QR/Ko-fi/Release/下载200，六群原图SHA吻合，飞书带Cookie匿名GET200。最初无Cookie404/循环证据保留，不把它写成知识库本身失效。
 
 旧v2.0.6Release完整稳定字段不变，68其它树/509脏文件/全部原包保护通过。详细docs/RELEASE_2.0.7_REPORT_2026-10-13.md；外部reports/logs回执固定远端正文/资产digest。只读发布辅助检查曾因utf8-sig别名和依赖回执尚未完成失败，原错误说明保留，改编码/顺序后原检查通过，未重发或改资产。原扩展NR+DLSS热切换失败和NV显存/BMD/HDR/AMD实卡限制保留，没有新性能或全硬件通过声明。群公告632字符仅保存给用户，无代发/关机。
+
+
+### 2026-10-13 云环境在线更新 PR
+
+本次用户明确要求新增在线更新 PR，并选择软件内下载、退出后自动替换。使用当前隔离云任务的现有 checkout，分支 `codex/online-update`；未创建 worktree/子 Agent。新增独立 Qt Core/Network 更新模块、关于页操作、Windows PowerShell 本地替换程序、多语言条目和网络/TLS打包约束；不改播放/增强算法、厂商 DLL/模型或现有发布资产。
+
+正式渠道仍为 Likely7/Veyra-NRVideo；按已安装 manifest 的 NVIDIA/AMD 类型匹配完整 ZIP，流式校验 GitHub asset SHA-256/size。PowerShell核验 ZIP/逐文件清单和路径、保留用户清单外文件、拒绝已修改 DLL/文件与目标冲突，备份后确认就绪、等待实际应用进程退出，替换或回滚，并保留原启动参数。首次安装此更新器须手动升级。详见 docs/ONLINE_UPDATE.md。
+
+实际环境 Linux/GCC14.2、Qt6.8.2（官方 Debian 已签名索引下载到 /workspace/veyra-cloud/deps/qt）、CMake3.31.10、Ninja1.13.0；PowerShell7.4.7来自Microsoft GitHub官方资产，解压前校验官方 hashes.sha256。构建命令 `cmake -S tests/updater -B /workspace/veyra-cloud/build/online-update -G Ninja -DCMAKE_PREFIX_PATH=/workspace/veyra-cloud/deps/qt/usr -DCMAKE_MAKE_PROGRAM=/workspace/veyra-cloud/deps/tools/bin/ninja -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror"`，随后 `cmake --build ... -j 2`、`ctest --test-dir ... --output-on-failure`：26 QtTest通过（含init/cleanup；24业务用例），0失败/跳过。首次严格警告构建发现一处误导缩进，改为独立语句后重新构建通过，不将旧测试二进制结果当新构建通过。
+
+`python3 -B tests/updater/installer_tests.py --pwsh /workspace/veyra-cloud/deps/powershell/runtime/pwsh --owner /workspace/veyra-cloud/build/online-update/veyra_update_owner --output /workspace/veyra-cloud/tests/online-update-install-1`：10场景全部通过（正常更新/重启参数/备份/配置保留/移除旧清单文件，错误archive或file hash，错误包类型，路径穿越/大小写冲突，自定义DLL/清单外冲突，取消，注入替换后hash失败并回滚）。证据各场景 helper-output.log/update.log 在上述任务目录。
+
+`python3 -B scripts/i18n/extract.py --check`：新增界面/更新状态均补简中源、繁中/英文/日文，缺译0、placeholder错误0。完整 Windows MSVC/QML/player teardown、Schannel部署/真实包冷启动、Windows锁文件/ACL和GPU验证未执行，不能声称已可正式发布；PR应为draft等待Windows验收。最初 GitHub API 网络策略403，保存新增 api.github.com 域名后实际API读取恢复；已验证现有正式v2.0.7两包digest字段，不要求新token。没有更改旧发布说明中的历史现场/显存/HDR/BMD限制。
+
+补充：新增OnlineUpdater模块实际HTTPS查询（Qt系统代理/证书验证启用）返回 `LIVE CHECK: available 2.0.7`，exit0；当前正式发布服务器元数据有效。更新脚本最终路径设备名限制补齐后在 `online-update-install-final` 重跑10场景全部通过。完整构建/Windows UI验收仍未执行。
+
+最终复查增加：异常重复发布资产不得遗留可下载引用；取消与应用退出竞态拒绝继续替换；官方2.0.7保留test-r2显示标识时按manifest数值版本判定，避免循环更新；安装前重新比较版本以拒绝被其他更新抢先升级后的降级。最终严格警告构建/QtTest为28通过（含init/cleanup，26业务用例）、0失败/跳过；实际helper最终12场景证据在 `/workspace/veyra-cloud/tests/online-update-install-final-reviewed`。QML设置页通过qmlformat解析（未写回文件），Python脚本AST与git diff --check通过。
