@@ -15716,6 +15716,216 @@
    "zh-TW": "{} {}X 補幀初始化失敗，未替換後端或降低倍率；請查看工作診斷日誌",
    "en": "{} {}X frame generation could not initialize. The backend and multiplier were retained; see the task diagnostic log.",
    "ja": "{} {}X フレーム生成を初期化できませんでした。バックエンドと倍率は維持されています。タスク診断ログを確認してください。"
+  },
+  {
+   "zh": "发布信息无效，请前往发布页手动更新",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "發布資訊無效，請前往發布頁手動更新",
+   "en": "Release information is invalid. Update manually from the release page.",
+   "ja": "リリース情報が無効です。公開ページから手動で更新してください。"
+  },
+  {
+   "zh": "无法识别当前便携包类型，请前往发布页手动更新",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "無法識別目前可攜包類型，請前往發布頁手動更新",
+   "en": "Cannot identify this portable package. Update manually from the release page.",
+   "ja": "現在のポータブルパッケージを識別できません。手動で更新してください。"
+  },
+  {
+   "zh": "更新包缺少有效 SHA-256 或下载地址，请前往发布页手动更新",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "更新包缺少有效 SHA-256 或下載位址，請前往發布頁手動更新",
+   "en": "The update lacks a valid SHA-256 or download URL. Update manually.",
+   "ja": "更新に有効な SHA-256 またはダウンロード先がありません。手動で更新してください。"
+  },
+  {
+   "zh": "未找到唯一匹配的更新包，请前往发布页手动更新",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "未找到唯一符合的更新包，請前往發布頁手動更新",
+   "en": "No unique matching update package was found. Update manually.",
+   "ja": "一致する更新パッケージを一意に特定できません。手動で更新してください。"
+  },
+  {
+   "zh": "点击检查正式版本更新",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "點擊檢查正式版本更新",
+   "en": "Click Check to look for a stable release.",
+   "ja": "確認を押して正式版の更新を確認します。"
+  },
+  {
+   "zh": "正在检查更新…",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "正在檢查更新…",
+   "en": "Checking for updates…",
+   "ja": "更新を確認しています…"
+  },
+  {
+   "zh": "检查更新失败，请检查网络或稍后重试",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "檢查更新失敗，請檢查網路或稍後重試",
+   "en": "Update check failed. Check the network or try again later.",
+   "ja": "更新の確認に失敗しました。ネットワークを確認するか、後で再試行してください。"
+  },
+  {
+   "zh": "当前已是最新正式版本",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "目前已是最新正式版本",
+   "en": "You are on the latest stable version.",
+   "ja": "最新の正式版です。"
+  },
+  {
+   "zh": "发现新版本 %1",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "發現新版本 %1",
+   "en": "Version %1 is available.",
+   "ja": "新しいバージョン %1 があります。"
+  },
+  {
+   "zh": "无法创建更新临时目录",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "無法建立更新暫存目錄",
+   "en": "Cannot create a temporary update folder.",
+   "ja": "更新用の一時フォルダーを作成できません。"
+  },
+  {
+   "zh": "无法写入更新包，请检查磁盘空间",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "無法寫入更新包，請檢查磁碟空間",
+   "en": "Cannot write the update package. Check free disk space.",
+   "ja": "更新パッケージを書き込めません。空き容量を確認してください。"
+  },
+  {
+   "zh": "正在下载并校验更新包…",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "正在下載並驗證更新包…",
+   "en": "Downloading and verifying the update…",
+   "ja": "更新をダウンロードして検証しています…"
+  },
+  {
+   "zh": "更新包写入失败或大小异常",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "更新包寫入失敗或大小異常",
+   "en": "The update could not be written or its size is invalid.",
+   "ja": "更新の書き込みに失敗したか、サイズが不正です。"
+  },
+  {
+   "zh": "下载失败，请检查网络和磁盘空间后重试",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "下載失敗，請檢查網路和磁碟空間後重試",
+   "en": "Download failed. Check the network and disk space, then retry.",
+   "ja": "ダウンロードに失敗しました。ネットワークと空き容量を確認して再試行してください。"
+  },
+  {
+   "zh": "更新包校验失败，已拒绝安装",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "更新包驗證失敗，已拒絕安裝",
+   "en": "Update verification failed. Installation was refused.",
+   "ja": "更新の検証に失敗したため、インストールを拒否しました。"
+  },
+  {
+   "zh": "更新包已校验，停止播放和导出后可退出安装",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "更新包已驗證，停止播放和匯出後可退出安裝",
+   "en": "Update verified. Stop playback and exports, then exit to install.",
+   "ja": "更新を検証しました。再生と書き出しを停止してから終了してインストールしてください。"
+  },
+  {
+   "zh": "更新已取消",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "更新已取消",
+   "en": "Update canceled.",
+   "ja": "更新をキャンセルしました。"
+  },
+  {
+   "zh": "自动替换仅支持 Windows 便携包",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "自動替換僅支援 Windows 可攜包",
+   "en": "Automatic replacement supports Windows portable packages only.",
+   "ja": "自動置換は Windows ポータブルパッケージにのみ対応します。"
+  },
+  {
+   "zh": "无法准备更新安装程序",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "無法準備更新安裝程式",
+   "en": "Cannot prepare the update installer.",
+   "ja": "更新インストーラーを準備できません。"
+  },
+  {
+   "zh": "无法启动更新安装程序",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "無法啟動更新安裝程式",
+   "en": "Cannot start the update installer.",
+   "ja": "更新インストーラーを起動できません。"
+  },
+  {
+   "zh": "正在准备退出安装…",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "正在準備退出安裝…",
+   "en": "Preparing to exit and install…",
+   "ja": "終了してインストールする準備をしています…"
+  },
+  {
+   "zh": "安装程序未就绪，软件保持运行；请查看临时目录中的 update.log",
+   "src": "src/ui/OnlineUpdater.cpp",
+   "zh-TW": "安裝程式未就緒，軟體保持執行；請查看暫存目錄中的 update.log",
+   "en": "Installer not ready; Veyra remains open. See update.log in the temporary update folder.",
+   "ja": "インストーラーの準備ができていないため Veyra を開いたままにします。一時フォルダーの update.log を確認してください。"
+  },
+  {
+   "zh": "请先停止播放和导出，再安装更新",
+   "src": "src/ui/QmlPlayerBridge.cpp",
+   "zh-TW": "請先停止播放和匯出，再安裝更新",
+   "en": "Stop playback and exports before installing the update.",
+   "ja": "更新をインストールする前に再生と書き出しを停止してください。"
+  },
+  {
+   "zh": "在线更新",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "線上更新",
+   "en": "Online update",
+   "ja": "オンライン更新"
+  },
+  {
+   "zh": "下载进度：%1%",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "下載進度：%1%",
+   "en": "Download: %1%",
+   "ja": "ダウンロード：%1%"
+  },
+  {
+   "zh": "下载当前包类型的完整更新，保留用户配置；旧文件备份供回退",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "下載目前包類型的完整更新，保留使用者設定；舊檔案備份供還原",
+   "en": "Download the full update for this package; keep user settings and back up old files.",
+   "ja": "現在のパッケージ用の更新を取得し、設定を保持して旧ファイルをバックアップします。"
+  },
+  {
+   "zh": "下载更新",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "下載更新",
+   "en": "Download update",
+   "ja": "更新をダウンロード"
+  },
+  {
+   "zh": "退出并安装",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "退出並安裝",
+   "en": "Exit and install",
+   "ja": "終了してインストール"
+  },
+  {
+   "zh": "手动更新",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "手動更新",
+   "en": "Manual update",
+   "ja": "手動更新"
+  },
+  {
+   "zh": "打开 GitHub 正式发布页",
+   "src": "qml/Veyra/SettingsPage.qml",
+   "zh-TW": "開啟 GitHub 正式發布頁",
+   "en": "Open the GitHub release page",
+   "ja": "GitHub の正式リリースページを開く"
   }
  ]
 }

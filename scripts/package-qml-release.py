@@ -21,7 +21,8 @@ ARTIFACTS = Path('E:/项目/Veyra')
 FORBIDDEN = {'.pdb', '.lib', '.obj', '.h', '.hpp', '.cpp', '.c', '.zip', '.7z',
              '.pth', '.onnx', '.log', '.dmp', '.mp4', '.mkv', '.partial', '.addon64'}
 REQUIRED = {'veyra_qml_ui.exe', 'qml/Veyra/Main.qml', 'platforms/qwindows.dll',
-            'Qt6Quick.dll', 'Qt6Core.dll', 'qt.conf', 'licenses/FFMPEG-VEYRA-BUILD.json',
+            'Qt6Quick.dll', 'Qt6Core.dll', 'Qt6Network.dll', 'tls/qschannelbackend.dll',
+            'qt.conf', 'licenses/FFMPEG-VEYRA-BUILD.json',
             'licenses/qt/LGPL-3.0-only.txt', 'licenses/qt/GPL-3.0-only.txt',
             'licenses/NVIDIA_RTX_VIDEO_SDK_LICENSE.pdf', 'licenses/INTEL_XESS_LICENSE.txt',
             'licenses/AMD-FIDELITYFX-LICENSE.txt', 'licenses/moonlight/LICENSE.txt',
